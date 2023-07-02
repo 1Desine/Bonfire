@@ -5,7 +5,7 @@ using UnityEngine;
 public class ConsumableObject : InteractableObject {
     [SerializeField] private ConsumableObjectSO consumableObjectSO;
 
-    
+
 
 
 

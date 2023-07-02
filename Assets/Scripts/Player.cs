@@ -43,9 +43,25 @@ public class Player : MonoBehaviour {
 
 
     private void GameInput_OnInteract(object sender, EventArgs e) {
-        if(selectedObject != null && objectHolding == null) {
-            if(selectedObject.TryGetComponent(out ConsumableObject consumableObject)) {
-                consumableObject.SetParent(objectHoldingPoint);
+        if(selectedObject != null) {
+            // Player is looking at something
+            if(objectHolding == null) {
+                // Player is not holding anithing
+                if(selectedObject.TryGetComponent(out ConsumableObject consumableObject)) {
+                    consumableObject.SetParent(objectHoldingPoint);
+                    objectHolding = consumableObject;
+                }
+            } else {
+                // Player is holding something
+                objectHolding.SetParent(selectedObject.transform);
+            }
+        } else {
+            // Player is not looking at anithing
+            if(objectHolding != null) {
+                // Player holding something
+                objectHolding.transform.SetParent(null);
+                objectHolding.transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+                objectHolding = null;
             }
         }
     }
