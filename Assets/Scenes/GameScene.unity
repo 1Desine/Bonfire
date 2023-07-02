@@ -359,7 +359,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &410087042
 MonoBehaviour:
@@ -602,45 +602,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1155161826 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7182570126994731415, guid: 4b810229d2ff5374590cf59dfabf7ce9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1782171354}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1155161828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1155161826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 576784b807c5bc148989633575b4494f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bonfire: {fileID: 0}
---- !u!1 &1201876026 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4394791689200111114, guid: 4b810229d2ff5374590cf59dfabf7ce9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1782171354}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1201876027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1201876026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8305f843d6067cd488191972dbdbc694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1478401382
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,7 +693,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1782171354
+--- !u!1001 &1788347793
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -738,25 +701,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 82300285506854920, guid: 4b810229d2ff5374590cf59dfabf7ce9,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.9
-      objectReference: {fileID: 0}
     - target: {fileID: 4394791689200111114, guid: 4b810229d2ff5374590cf59dfabf7ce9,
         type: 3}
       propertyPath: m_Name
       value: Bonfire
       objectReference: {fileID: 0}
-    - target: {fileID: 7182570126994731415, guid: 4b810229d2ff5374590cf59dfabf7ce9,
-        type: 3}
-      propertyPath: m_Name
-      value: BonfireVisual
-      objectReference: {fileID: 0}
     - target: {fileID: 7567588970784394454, guid: 4b810229d2ff5374590cf59dfabf7ce9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7567588970784394454, guid: 4b810229d2ff5374590cf59dfabf7ce9,
         type: 3}
@@ -811,13 +764,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4394791689200111114, guid: 4b810229d2ff5374590cf59dfabf7ce9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1201876027}
-    - targetCorrespondingSourceObject: {fileID: 7182570126994731415, guid: 4b810229d2ff5374590cf59dfabf7ce9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1155161828}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b810229d2ff5374590cf59dfabf7ce9, type: 3}
