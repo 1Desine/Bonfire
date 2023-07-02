@@ -10,7 +10,7 @@ public class ConsumableObject : InteractableObject {
 
 
     public void SetParent(Transform parent) {
-        this.SetParent(parent);
+        this.transform.SetParent(parent);
         this.transform.position = parent.position;
         this.transform.localPosition = Vector3.zero;
     }

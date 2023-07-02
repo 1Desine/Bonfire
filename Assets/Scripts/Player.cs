@@ -42,9 +42,11 @@ public class Player : MonoBehaviour {
     }
 
 
-    private void GameInput_OnInteract(object sender, System.EventArgs e) {
-        if(selectedObject != null) {
-            selectedObject.Interact();
+    private void GameInput_OnInteract(object sender, EventArgs e) {
+        if(selectedObject != null && objectHolding == null) {
+            if(selectedObject.TryGetComponent(out ConsumableObject consumableObject)) {
+                consumableObject.SetParent(objectHoldingPoint);
+            }
         }
     }
 
@@ -59,9 +61,9 @@ public class Player : MonoBehaviour {
         float playerHight = 1f;
         if(moveDir != Vector3.zero) {
             if(Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, playerRadius, moveDir, out RaycastHit raycastHit, interactDistance)) {
-                if(raycastHit.collider.TryGetComponent(out InteractableObject selectableObject)) {
+                if(raycastHit.collider.TryGetComponent(out InteractableObject interactableObject)) {
                     if(raycastHit.collider.gameObject != selectedObject) {
-                        SetSelectedObject(selectableObject);
+                        SetSelectedObject(interactableObject);
                     }
                 } else {
                     SetSelectedObject(null);
