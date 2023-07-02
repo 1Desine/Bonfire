@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectedVisual : MonoBehaviour {
-    [SerializeField] private SelectableObject selectableObject;
+    [SerializeField] private InteractableObject selectableObject;
     [SerializeField] private List<GameObject> VisualSelectedList;
 
 

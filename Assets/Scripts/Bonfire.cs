@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bonfire : SelectableObject {
+public class Bonfire : InteractableObject {
 
 
 
