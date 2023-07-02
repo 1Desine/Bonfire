@@ -54,13 +54,13 @@ public class Player : MonoBehaviour {
             } else {
                 // Player is holding something
                 objectHolding.SetParent(selectedObject.transform);
+                objectHolding = null;
             }
         } else {
             // Player is not looking at anithing
             if(objectHolding != null) {
                 // Player holding something
-                objectHolding.transform.SetParent(null);
-                objectHolding.transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+                objectHolding.SetParent(null);
                 objectHolding = null;
             }
         }
