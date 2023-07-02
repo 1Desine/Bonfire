@@ -8,16 +8,18 @@ using UnityEngine;
 public class Player : MonoBehaviour {
     public static Player Instance;
 
+    private const string SELECTABLE_OBJECT_TAG = "SelectableObject";
+
+    [SerializeField] private Transform objectHoldingPoint;
 
     public event EventHandler<OnSelectedObjectChengedEventArgs> OnSelectedObjectChenged;
     public class OnSelectedObjectChengedEventArgs : EventArgs {
-        public InteractableObject selectedObject;
+        public SelectableObject selectedObject;
     }
-    private InteractableObject selectedObject;
-
+    private SelectableObject selectedObject;
+    private ConsumableObject objectHolding;
 
     private float moveSpeed = 10f;
-
     private bool isWalking;
 
 
@@ -28,19 +30,21 @@ public class Player : MonoBehaviour {
         Instance = this;
     }
 
-    void Start() {
-
+    private void Start() {
+        GameInput.Instance.OnInteract += GameInput_OnInteract;
     }
 
+    private void GameInput_OnInteract(object sender, System.EventArgs e) {
+        if(selectedObject != null) {
+            selectedObject.Interact();
+        }
+
+    }
 
 
     void Update() {
         HandleMovement();
         HandleInteractions();
-
-        if(selectedObject == null) {
-            Debug.Log("Player, selectedObject - null");
-        }
 
     }
 
@@ -56,9 +60,9 @@ public class Player : MonoBehaviour {
         float playerHight = 1f;
         if(moveDir != Vector3.zero) {
             if(Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, playerRadius, moveDir, out RaycastHit raycastHit, interactDistance)) {
-                if(raycastHit.transform.TryGetComponent(out InteractableObject interactableObject)) {
-                    if(interactableObject != selectedObject) {
-                        SetSelectedObject(interactableObject);
+                if(raycastHit.collider.TryGetComponent(out SelectableObject selectableObject)) {
+                    if(raycastHit.collider.gameObject != selectedObject) {
+                        SetSelectedObject(selectableObject);
                     }
                 } else {
                     SetSelectedObject(null);
@@ -108,13 +112,16 @@ public class Player : MonoBehaviour {
         return isWalking;
     }
 
-    private void SetSelectedObject(InteractableObject selectedObject) {
+    private void SetSelectedObject(SelectableObject selectedObject) {
         this.selectedObject = selectedObject;
 
         OnSelectedObjectChenged?.Invoke(this, new OnSelectedObjectChengedEventArgs {
             selectedObject = selectedObject
         });
+
+        Debug.Log("Player - SetSelectedObject");
     }
+
 
 
 }

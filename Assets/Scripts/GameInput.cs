@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,8 @@ using UnityEngine;
 public class GameInput : MonoBehaviour {
     public static GameInput Instance;
 
-
+    public event EventHandler OnInteract;
+    public event EventHandler OnInteractAlt;
 
 
     private PlayerInputActions playerInputActions;
@@ -18,6 +20,14 @@ public class GameInput : MonoBehaviour {
         playerInputActions.Player.Enable();
     }
 
+    private void Start() {
+        playerInputActions.Player.Interact.performed += Interact_performed;
+        //playerInputActions.Player.InteractAlt.performed += InteractAlt_performed;
+    }
+
+    private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        OnInteract?.Invoke(this, EventArgs.Empty);
+    }
 
     private void Update() {
         

@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BonfireVisual : MonoBehaviour {
-    [SerializeField] private GameObject bonfire;
+public class SelectedVisual : MonoBehaviour {
+    [SerializeField] private SelectableObject selectableObject;
     [SerializeField] private List<GameObject> VisualSelectedList;
 
 
@@ -12,16 +12,8 @@ public class BonfireVisual : MonoBehaviour {
     }
 
     private void Player_OnSelectedObjectChenged(object sender, Player.OnSelectedObjectChengedEventArgs e) {
-        if(e.selectedObject == null) {
-            Debug.Log("BonfireVisual, e.selectedObject - null");
-        }
-
-        if(e.selectedObject != null) {
-            if(e.selectedObject.interactableObject == bonfire) {
-                Show();
-            } else {
-                Hide();
-            }
+        if(e.selectedObject == selectableObject) {
+            Show();
         } else {
             Hide();
         }
@@ -29,8 +21,8 @@ public class BonfireVisual : MonoBehaviour {
 
 
     private void Show() {
-        foreach(GameObject visual in VisualSelectedList) { 
-        visual.SetActive(true);
+        foreach(GameObject visual in VisualSelectedList) {
+            visual.SetActive(true);
         }
     }
     private void Hide() {
