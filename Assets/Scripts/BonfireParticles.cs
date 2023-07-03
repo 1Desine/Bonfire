@@ -40,7 +40,6 @@ public class BonfireParticles : MonoBehaviour {
         SetIntenceEffects(intenceEffectsTimer > 0);
 
         bonfireHelthNormalized = Bonfire.Instance.GetHealthNormalized();
-        Debug.Log(highestPointY * bonfireHelthNormalized);
 
         particles.transform.position = new Vector3(0, highestPointY * bonfireHelthNormalized, 0);
     }
