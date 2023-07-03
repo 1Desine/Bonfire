@@ -11,6 +11,9 @@ public class Player : MonoBehaviour {
     private const string SELECTABLE_OBJECT_TAG = "SelectableObject";
 
     [SerializeField] private Transform objectHoldingPoint;
+    [SerializeField] private Transform playerVisual;
+    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float mouseSensitivity = 0.1f;
 
     public event EventHandler<OnSelectedObjectChengedEventArgs> OnSelectedObjectChenged;
     public class OnSelectedObjectChengedEventArgs : EventArgs {
@@ -19,7 +22,6 @@ public class Player : MonoBehaviour {
     private InteractableObject selectedObject;
     private ConsumableObject objectHolding;
 
-    private float moveSpeed = 10f;
     private bool isWalking;
 
 
@@ -38,14 +40,14 @@ public class Player : MonoBehaviour {
     void Update() {
         HandleMovement();
         HandleInteractions();
-
+        HandleRotation();
     }
 
 
     private void GameInput_OnInteract(object sender, EventArgs e) {
         if(selectedObject != null) {
             // Player is looking at something
-            if(objectHolding == null) {
+            if(!IsHoldingSomething()) {
                 // Player is not holding anithing
                 if(selectedObject.TryGetComponent(out ConsumableObject consumableObject)) {
                     consumableObject.SetParent(objectHoldingPoint);
@@ -68,39 +70,40 @@ public class Player : MonoBehaviour {
 
 
     private void HandleInteractions() {
-        Vector2 moveInput = GameInput.Instance.GetMovementVectorNormalized();
-        Vector3 moveDir = new Vector3(moveInput.x, 0f, moveInput.y);
-
         float interactDistance = 1f;
 
         float playerRadius = .5f;
         float playerHight = 1f;
-        if(moveDir != Vector3.zero) {
-            if(Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, playerRadius, moveDir, out RaycastHit raycastHit, interactDistance)) {
-                if(raycastHit.collider.TryGetComponent(out InteractableObject interactableObject)) {
-                    if(raycastHit.collider.gameObject != selectedObject) {
-                        SetSelectedObject(interactableObject);
-                    }
-                } else {
-                    SetSelectedObject(null);
+        if(Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, playerRadius, transform.forward, out RaycastHit raycastHit, interactDistance)) {
+            if(raycastHit.collider.TryGetComponent(out InteractableObject interactableObject)) {
+                if(raycastHit.collider.gameObject != selectedObject) {
+                    SetSelectedObject(interactableObject);
                 }
             } else {
                 SetSelectedObject(null);
             }
+        } else {
+            SetSelectedObject(null);
         }
     }
-
     private void HandleMovement() {
-        Vector2 moveInput = GameInput.Instance.GetMovementVectorNormalized();
-        Vector3 moveDir = new Vector3(moveInput.x, 0f, moveInput.y);
-        float moveDistance = moveSpeed * Time.deltaTime;
+        Vector2 inputDir = GameInput.Instance.GetMovementVectorNormalized();
+        Vector3 moveDir = transform.forward * inputDir.y + transform.right * inputDir.x;
 
         float rotationSpeed = 10f;
-        transform.forward = Vector3.Slerp(transform.forward, moveDir, rotationSpeed * Time.deltaTime);
-
+        float moveDistance = moveSpeed * Time.deltaTime;
         float playerRadius = .5f;
         float playerHight = 1f;
         bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, playerRadius, moveDir, moveDistance);
+
+
+        if(IsHoldingSomething()) {
+            playerVisual.forward = transform.forward;
+        } else {
+            Vector2 mousePositionsDelta = GameInput.Instance.GetMouseVector();
+            playerVisual.eulerAngles -= new Vector3(0, mousePositionsDelta.x * mouseSensitivity, 0);
+            playerVisual.forward = Vector3.Slerp(playerVisual.forward, moveDir, rotationSpeed * Time.deltaTime);
+        }
 
         if(!canMove) {
             // Try only X
@@ -123,6 +126,12 @@ public class Player : MonoBehaviour {
         }
         isWalking = canMove && moveDir != Vector3.zero;
     }
+    private void HandleRotation() {
+        Vector2 mousePositionsDelta = GameInput.Instance.GetMouseVector();
+        transform.eulerAngles += new Vector3(0, mousePositionsDelta.x * mouseSensitivity, 0);
+    }
+
+
 
     public bool IsWalking() {
         return isWalking;
@@ -136,6 +145,8 @@ public class Player : MonoBehaviour {
         });
     }
 
-
+    private bool IsHoldingSomething() {
+        return objectHolding != null;
+    }
 
 }

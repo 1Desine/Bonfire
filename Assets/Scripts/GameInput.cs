@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class GameInput : MonoBehaviour {
     public static GameInput Instance;
@@ -37,6 +38,9 @@ public class GameInput : MonoBehaviour {
 
     public Vector2 GetMovementVectorNormalized() {
         return playerInputActions.Player.Move.ReadValue<Vector2>().normalized;
+    }
+    public Vector2 GetMouseVector() {
+        return playerInputActions.Player.Look.ReadValue<Vector2>();
     }
 
 
