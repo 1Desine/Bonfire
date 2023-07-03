@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b8864d67583e34d8b85c8baf524a75, type: 3}
   m_Name: TreeLog
   m_EditorClassIdentifier: 
-  scriptableObject: {fileID: 8264591696562316102, guid: e9a7a95ac70612d448f3df702abbfa75,
-    type: 3}
-  name: TreeLog
+  Prefab: {fileID: 3037311816685692837, guid: e9a7a95ac70612d448f3df702abbfa75, type: 3}
+  objectName: TreeLog
+  energyValue: 10

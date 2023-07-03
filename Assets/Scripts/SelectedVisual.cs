@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class SelectedVisual : MonoBehaviour {
@@ -29,6 +30,10 @@ public class SelectedVisual : MonoBehaviour {
         foreach(GameObject visual in VisualSelectedList) {
             visual.SetActive(false);
         }
+    }
+
+    private void OnDestroy() {
+        Player.Instance.OnSelectedObjectChenged -= Player_OnSelectedObjectChenged;
     }
 
 }

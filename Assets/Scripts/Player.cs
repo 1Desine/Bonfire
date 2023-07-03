@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-    public static Player Instance;
+    public static Player Instance { get; private set; }
 
     private const string SELECTABLE_OBJECT_TAG = "SelectableObject";
 
@@ -55,8 +55,9 @@ public class Player : MonoBehaviour {
                 }
             } else {
                 // Player is holding something
-                objectHolding.SetParent(selectedObject.transform);
-                objectHolding = null;
+                if(selectedObject == Bonfire.Instance) {
+                    Bonfire.Instance.BurnObject(objectHolding);
+                }
             }
         } else {
             // Player is not looking at anithing
