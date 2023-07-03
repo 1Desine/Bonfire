@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [CreateAssetMenu()]
 public class ConsumableObjectSO : ScriptableObject {
 
-    [SerializeField] private GameObject scriptableObject;
-    [SerializeField] private string name;
+    public Transform Prefab;
+    public string objectName;
 
 }
