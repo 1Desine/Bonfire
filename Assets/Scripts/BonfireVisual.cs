@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class BonfireVisual : MonoBehaviour {
@@ -15,6 +16,9 @@ public class BonfireVisual : MonoBehaviour {
     private float lightingIntensityMax;
 
 
+    private float intecityTimer;
+    private float intecityTimerMax = 2f;
+
     private void Awake() {
         lighting = lightObject.GetComponent<Light>();
         lightingRangeMax = lighting.range;
@@ -24,11 +28,17 @@ public class BonfireVisual : MonoBehaviour {
 
     private void Update() {
         healthNormalized = bonfire.GetHealthNormalized();
+        intecityTimer -= Time.deltaTime;
 
         HandleAmountOfWood();
         HandleLightingEffect();
+
+        bonfire.OnOverflow += Bonfire_OnOverflow;
     }
 
+    private void Bonfire_OnOverflow(object sender, System.EventArgs e) {
+        intecityTimer = intecityTimerMax;
+    }
 
     private void HandleAmountOfWood() {
         float offset = .2f;
@@ -45,7 +55,12 @@ public class BonfireVisual : MonoBehaviour {
 
     private void HandleLightingEffect() {
         lighting.range = lightingRangeMax * healthNormalized;
-        lighting.intensity = lightingIntensityMax * healthNormalized + 100;
+        if(intecityTimer > 0) {
+            float lightingIntensityMax_intence = 2f;
+            lighting.intensity = math.lerp(lighting.intensity, lightingIntensityMax * lightingIntensityMax_intence, 3f * Time.deltaTime);
+        } else {
+            lighting.intensity = math.lerp(lighting.intensity, lightingIntensityMax * healthNormalized, 1f * Time.deltaTime);
+        }
     }
 
 
