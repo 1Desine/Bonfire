@@ -49,9 +49,8 @@ public class Player : MonoBehaviour {
             // Player is looking at something
             if(!IsHoldingSomething()) {
                 // Player is not holding anithing
-                if(selectedObject.TryGetComponent(out ConsumableObject consumableObject)) {
-                    consumableObject.SetParent(objectHoldingPoint);
-                    objectHolding = consumableObject;
+                if(selectedObject.TryGetComponent(out InteractableObject interactableObject)) {
+                    interactableObject.Interact(this.gameObject, objectHoldingPoint, ref objectHolding);
                 }
             } else {
                 // Player is holding something

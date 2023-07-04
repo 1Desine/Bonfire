@@ -24,4 +24,11 @@ public class ConsumableObject : InteractableObject {
         return energyValue;
     }
 
+    public override void Interact(GameObject player, Transform parentHoldPoint, ref ConsumableObject objectHolding) {
+        objectHolding = this;
+        SetParent(parentHoldPoint);
+    }
+
+
+
 }

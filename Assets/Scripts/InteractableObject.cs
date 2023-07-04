@@ -5,8 +5,8 @@ using UnityEngine;
 public class InteractableObject : MonoBehaviour {
 
 
-    public virtual void Interact() {
 
+    public virtual void Interact(GameObject player, Transform parentHoldPoint, ref ConsumableObject objectHolding) {
     }
 
 
