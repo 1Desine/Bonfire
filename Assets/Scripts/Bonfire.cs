@@ -10,7 +10,7 @@ public class Bonfire : InteractableObject {
     public event EventHandler OnOverflow;
     public event EventHandler OnConsumableAdded;
 
-    private float healthMax = 30f;
+    private float healthMax = 15f;
     private float health;
 
     private void Awake() {
