@@ -54,7 +54,9 @@ public class BonfireVisual : MonoBehaviour {
     }
 
     private void HandleLightingEffect() {
-        lighting.range = lightingRangeMax * healthNormalized;
+        float rangeModefier = 5f;
+
+        lighting.range = lightingRangeMax * healthNormalized + rangeModefier;
         if(intecityTimer > 0) {
             float lightingIntensityMax_intence = 2f;
             lighting.intensity = math.lerp(lighting.intensity, lightingIntensityMax * lightingIntensityMax_intence, 3f * Time.deltaTime);

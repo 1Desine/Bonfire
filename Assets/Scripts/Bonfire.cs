@@ -10,8 +10,15 @@ public class Bonfire : InteractableObject {
     public event EventHandler OnOverflow;
     public event EventHandler OnConsumableAdded;
 
+    public event EventHandler<OnDiedEventArgs> OnDied;
+    public class OnDiedEventArgs : EventArgs {
+        public float lifeTime;
+    }
+
     private float healthMax = 30f;
     private float health;
+
+    private float lifeTime;
 
     private void Awake() {
         if (Instance != null) {
@@ -22,8 +29,16 @@ public class Bonfire : InteractableObject {
     }
 
     private void Update() {
+        lifeTime += Time.deltaTime;
+
         health -= Time.deltaTime;
         OnConsumableAdded?.Invoke(this, EventArgs.Empty);
+
+        if(health < 0) {
+            OnDied?.Invoke(this, new OnDiedEventArgs {
+                lifeTime = lifeTime
+            });
+        }
     }
 
     public float GetHealthNormalized() {

@@ -24,6 +24,12 @@ public class GameInput : MonoBehaviour {
     private void Start() {
         playerInputActions.Player.Interact.performed += Interact_performed;
         //playerInputActions.Player.InteractAlt.performed += InteractAlt_performed;
+
+        Bonfire.Instance.OnDied += Bonfire_OnDied;
+    }
+
+    private void Bonfire_OnDied(object sender, Bonfire.OnDiedEventArgs e) {
+        playerInputActions.Player.Disable();
     }
 
     private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
