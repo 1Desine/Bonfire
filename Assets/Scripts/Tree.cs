@@ -10,7 +10,7 @@ public class Tree : InteractableObject {
 
     public override void Interact(GameObject player, Transform parentHoldPoint, ref ConsumableObject objectHolding) {
         GameObject nextObject = Instantiate(ObjectToSpawn);
-        nextObject.transform.position = this.transform.position;
+        nextObject.transform.position = this.transform.position + player.transform.forward;
         nextObject.transform.LookAt(Player.Instance.transform);
         nextObject.transform.SetParent(null);
 

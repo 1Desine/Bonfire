@@ -25,6 +25,10 @@ public class Player : MonoBehaviour {
     private bool isWalking;
 
 
+    private float boostMoveSpeedMultiplier = 1.5f;
+    private float boostMoveSpeedTimer;
+    private float boostMoveSpeedTimerMax = 2f;
+
     private void Awake() {
         if(Instance != null) {
             Debug.LogError("Player - more then one Instance");
@@ -34,13 +38,19 @@ public class Player : MonoBehaviour {
 
     private void Start() {
         GameInput.Instance.OnInteract += GameInput_OnInteract;
+        Bonfire.Instance.OnOverflow += Bonfire_OnOverflow; ;
     }
 
+    private void Bonfire_OnOverflow(object sender, EventArgs e) {
+        boostMoveSpeedTimer = boostMoveSpeedTimerMax;
+    }
 
     void Update() {
         HandleMovement();
         HandleInteractions();
         HandleRotation();
+
+        boostMoveSpeedTimer-=Time.deltaTime;
     }
 
 
@@ -92,6 +102,9 @@ public class Player : MonoBehaviour {
 
         float rotationSpeed = 10f;
         float moveDistance = moveSpeed * Time.deltaTime;
+        if(boostMoveSpeedTimer > 0) {
+            moveDistance *= boostMoveSpeedMultiplier;
+        }
         float playerRadius = .5f;
         float playerHight = 1f;
         bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, playerRadius, moveDir, moveDistance);

@@ -16,7 +16,7 @@ public class ConsumableObject : InteractableObject {
         } else {
             Vector3 position = transform.position;
             this.transform.SetParent(parent);
-            this.transform.position = new Vector3(position.x, transform.localScale.y / 2, position.z);
+            this.transform.position = new Vector3(position.x, 0, position.z);
         }
     }
 
