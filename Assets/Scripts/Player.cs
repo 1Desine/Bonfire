@@ -72,6 +72,7 @@ public class Player : MonoBehaviour {
                 // Player is not holding anithing
                 if(selectedObject.TryGetComponent(out InteractableObject interactableObject)) {
                     interactableObject.Interact(this.gameObject, objectHoldingPoint, ref objectHolding);
+
                     if(interactableObject.GetName() == OBJECT_NAME_LOG) {
                         OnGrabLog?.Invoke(this, EventArgs.Empty);
                     } else if(interactableObject.GetName() == OBJECT_NAME_MASHROOM) {
@@ -91,7 +92,6 @@ public class Player : MonoBehaviour {
             // Player is not looking at anithing
             if(objectHolding != null) {
                 // Player holding something
-                objectHolding.SetParent(null);
                 if(objectHolding.GetName() == OBJECT_NAME_LOG) {
                     OnDropLog?.Invoke(this, EventArgs.Empty);
                 } else if(objectHolding.GetName() == OBJECT_NAME_MASHROOM) {
@@ -99,6 +99,8 @@ public class Player : MonoBehaviour {
                 } else {
                     Debug.Log("Player - can't find object with right name");
                 }
+
+                objectHolding.SetParent(null);
                 objectHolding = null;
             }
         }

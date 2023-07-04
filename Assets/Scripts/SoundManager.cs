@@ -20,16 +20,16 @@ public class SoundManager : MonoBehaviour {
         PlaySound(audioClipRefsSO.burnObject, Bonfire.Instance.transform.position);
     }
     private void Player_OnGrabLog(object sender, System.EventArgs e) {
-        PlaySound(audioClipRefsSO.grabLog, Camera.main.transform.position);
+        PlaySound(audioClipRefsSO.grabLog, Player.Instance.transform.position);
     }
     private void Player_OnDropLog(object sender, System.EventArgs e) {
-        PlaySound(audioClipRefsSO.dropLog, Camera.main.transform.position);
+        PlaySound(audioClipRefsSO.dropLog, Player.Instance.transform.position);
     }
     private void Player_OnGrabMashroom(object sender, System.EventArgs e) {
-        PlaySound(audioClipRefsSO.grabMushroom, Camera.main.transform.position);
+        PlaySound(audioClipRefsSO.grabMushroom, Player.Instance.transform.position);
     }
     private void Player_OnDropMashroom(object sender, System.EventArgs e) {
-        PlaySound(audioClipRefsSO.dropMushroom, Camera.main.transform.position);
+        PlaySound(audioClipRefsSO.dropMushroom, Player.Instance.transform.position);
     }
 
 
