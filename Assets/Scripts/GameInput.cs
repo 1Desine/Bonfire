@@ -8,7 +8,6 @@ public class GameInput : MonoBehaviour {
     public static GameInput Instance;
 
     public event EventHandler OnInteract;
-    public event EventHandler OnInteractAlt;
 
 
     private PlayerInputActions playerInputActions;
@@ -23,7 +22,6 @@ public class GameInput : MonoBehaviour {
 
     private void Start() {
         playerInputActions.Player.Interact.performed += Interact_performed;
-        //playerInputActions.Player.InteractAlt.performed += InteractAlt_performed;
 
         Bonfire.Instance.OnDied += Bonfire_OnDied;
     }

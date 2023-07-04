@@ -316,4 +316,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eef0d7f34d59334fbbc18ab028bfe09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: Log
   energyValue: 10

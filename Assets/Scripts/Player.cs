@@ -9,11 +9,22 @@ public class Player : MonoBehaviour {
     public static Player Instance { get; private set; }
 
     private const string SELECTABLE_OBJECT_TAG = "SelectableObject";
+    private const string OBJECT_NAME_LOG = "Log";
+    private const string OBJECT_NAME_MASHROOM = "Mashroom";
+
+
+
 
     [SerializeField] private Transform objectHoldingPoint;
     [SerializeField] private Transform playerVisual;
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float mouseSensitivity = 0.1f;
+
+    public event EventHandler OnGrabMashroom;
+    public event EventHandler OnDropMashroom;
+    public event EventHandler OnGrabLog;
+    public event EventHandler OnDropLog;
+    public event EventHandler OnBurnObject;
 
     public event EventHandler<OnSelectedObjectChengedEventArgs> OnSelectedObjectChenged;
     public class OnSelectedObjectChengedEventArgs : EventArgs {
@@ -38,7 +49,7 @@ public class Player : MonoBehaviour {
 
     private void Start() {
         GameInput.Instance.OnInteract += GameInput_OnInteract;
-        Bonfire.Instance.OnOverflow += Bonfire_OnOverflow; ;
+        Bonfire.Instance.OnOverflow += Bonfire_OnOverflow;
     }
 
     private void Bonfire_OnOverflow(object sender, EventArgs e) {
@@ -50,7 +61,7 @@ public class Player : MonoBehaviour {
         HandleInteractions();
         HandleRotation();
 
-        boostMoveSpeedTimer-=Time.deltaTime;
+        boostMoveSpeedTimer -= Time.deltaTime;
     }
 
 
@@ -61,11 +72,19 @@ public class Player : MonoBehaviour {
                 // Player is not holding anithing
                 if(selectedObject.TryGetComponent(out InteractableObject interactableObject)) {
                     interactableObject.Interact(this.gameObject, objectHoldingPoint, ref objectHolding);
+                    if(interactableObject.GetName() == OBJECT_NAME_LOG) {
+                        OnGrabLog?.Invoke(this, EventArgs.Empty);
+                    } else if(interactableObject.GetName() == OBJECT_NAME_MASHROOM) {
+                        OnGrabMashroom?.Invoke(this, EventArgs.Empty);
+                    } else {
+                        Debug.Log("Player - can't find object with right name");
+                    }
                 }
             } else {
                 // Player is holding something
                 if(selectedObject == Bonfire.Instance) {
                     Bonfire.Instance.BurnObject(objectHolding);
+                    OnBurnObject?.Invoke(this, EventArgs.Empty);
                 }
             }
         } else {
@@ -73,6 +92,13 @@ public class Player : MonoBehaviour {
             if(objectHolding != null) {
                 // Player holding something
                 objectHolding.SetParent(null);
+                if(objectHolding.GetName() == OBJECT_NAME_LOG) {
+                    OnDropLog?.Invoke(this, EventArgs.Empty);
+                } else if(objectHolding.GetName() == OBJECT_NAME_MASHROOM) {
+                    OnDropLog?.Invoke(this, EventArgs.Empty);
+                } else {
+                    Debug.Log("Player - can't find object with right name");
+                }
                 objectHolding = null;
             }
         }
