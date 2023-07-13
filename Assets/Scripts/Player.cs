@@ -20,6 +20,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float mouseSensitivity = 0.1f;
 
+    public event EventHandler OnStep;
     public event EventHandler OnGrabMashroom;
     public event EventHandler OnDropMashroom;
     public event EventHandler OnGrabLog;
@@ -39,6 +40,9 @@ public class Player : MonoBehaviour {
     private float boostMoveSpeedMultiplier = 1.5f;
     private float boostMoveSpeedTimer;
     private float boostMoveSpeedTimerMax = 2f;
+
+    private float stepTimer;
+    private float stepTimerMax = 0.2f;
 
     private void Awake() {
         if(Instance != null) {
@@ -166,6 +170,12 @@ public class Player : MonoBehaviour {
             transform.position += moveDir * moveDistance;
         }
         isWalking = canMove && moveDir != Vector3.zero;
+
+        stepTimer += Time.deltaTime;
+        if(isWalking && stepTimer > stepTimerMax) {
+            stepTimer = 0;
+            OnStep?.Invoke(this, EventArgs.Empty);
+        }
     }
     private void HandleRotation() {
         Vector2 mousePositionsDelta = GameInput.Instance.GetMouseVector();

@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour {
 
 
     private void Start() {
+        Player.Instance.OnStep += Player_OnStep; ;
         Player.Instance.OnGrabMashroom += Player_OnGrabMashroom;
         Player.Instance.OnDropMashroom += Player_OnDropMashroom;
         Player.Instance.OnGrabLog += Player_OnGrabLog;
@@ -16,6 +17,10 @@ public class SoundManager : MonoBehaviour {
         Player.Instance.OnBurnObject += Player_OnBurnObject;
     }
 
+
+    private void Player_OnStep(object sender, System.EventArgs e) {
+        PlaySound(audioClipRefsSO.step, Player.Instance.transform.position);
+    }
     private void Player_OnBurnObject(object sender, System.EventArgs e) {
         PlaySound(audioClipRefsSO.burnObject, Bonfire.Instance.transform.position);
     }
